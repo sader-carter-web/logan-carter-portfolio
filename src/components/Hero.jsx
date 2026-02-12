@@ -142,7 +142,7 @@ const Hero = () => {
             className="relative hidden lg:block -mt-10"
           >
             <div className="relative flex flex-col gap-6">
-              <div className="relative w-[70%] mx-auto">
+              <div className="relative w-[60%] mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-orange-500/20 rounded-2xl blur-xl" />
                 <div className="relative glass rounded-2xl overflow-hidden p-2">
                   <img
