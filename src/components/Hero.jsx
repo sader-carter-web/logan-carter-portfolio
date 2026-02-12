@@ -95,9 +95,9 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 mt-8 sm:mt-12"
+              className="flex items-center gap-3 sm:gap-6 mt-8 sm:mt-12"
             >
-              <span className="text-dark-500 text-sm">Core Tools:</span>
+              <span className="text-dark-500 text-sm hidden sm:inline">Core Tools:</span>
               <div className="flex items-center gap-3 sm:gap-4">
                 {[
                   { icon: PenTool, label: 'SolidWorks' },
@@ -119,6 +119,18 @@ const Hero = () => {
                   </motion.div>
                 ))}
               </div>
+
+              {/* Mobile scroll indicator - inline next to core tools */}
+              <motion.a
+                href="#about"
+                animate={{ y: [0, 6, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{ opacity: scrollOpacity }}
+                className="lg:hidden flex flex-col items-center text-dark-500 hover:text-primary-400 transition-colors ml-auto"
+              >
+                <span className="text-xs mb-1">Scroll</span>
+                <ChevronDown size={16} />
+              </motion.a>
             </motion.div>
           </motion.div>
 
@@ -210,7 +222,7 @@ const Hero = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
         style={{ opacity: scrollOpacity }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden lg:flex"
       >
         <motion.a
           href="#about"
