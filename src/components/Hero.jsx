@@ -1,7 +1,10 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { ChevronDown, Cog, PenTool, Ruler, Wrench, Linkedin } from 'lucide-react'
 
 const Hero = () => {
+  const { scrollY } = useScroll()
+  const scrollOpacity = useTransform(scrollY, [0, 200], [1, 0])
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-14 lg:pt-20">
       <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-primary-500/20 rounded-full blur-3xl animate-pulse-slow" />
@@ -200,23 +203,25 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2"
-        >
-          <motion.a
-            href="#about"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center text-dark-500 hover:text-primary-400 transition-colors"
-          >
-            <span className="text-sm mb-2">Scroll to explore</span>
-            <ChevronDown size={20} />
-          </motion.a>
-        </motion.div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        style={{ opacity: scrollOpacity }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10"
+      >
+        <motion.a
+          href="#about"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="flex flex-col items-center text-dark-500 hover:text-primary-400 transition-colors"
+        >
+          <span className="text-sm mb-2">Scroll to explore</span>
+          <ChevronDown size={20} />
+        </motion.a>
+      </motion.div>
     </section>
   )
 }
