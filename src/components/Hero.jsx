@@ -43,16 +43,35 @@ const Hero = () => {
               Mechanical Engineering Student
             </motion.h2>
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="text-dark-400 text-lg mb-8 max-w-xl leading-relaxed"
+              className="flex gap-4 mb-8 items-start"
             >
-              Dedicated and innovative engineering student at the University of Colorado Boulder.
-              Extensive experience in SolidWorks, MATLAB, and mechanical design with a passion for
-              analytical precision and creative problem solving.
-            </motion.p>
+              <p className="text-dark-400 text-lg max-w-xl leading-relaxed flex-1">
+                Dedicated and innovative engineering student at the University of Colorado Boulder.
+                Extensive experience in SolidWorks, MATLAB, and mechanical design with a passion for
+                analytical precision and creative problem solving.
+              </p>
+              <div className="relative shrink-0 lg:hidden w-28 sm:w-36">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-orange-500/20 rounded-2xl blur-xl" />
+                <div className="relative glass rounded-2xl overflow-hidden p-1.5">
+                  <img
+                    src="/images/profile/logan.jpg"
+                    alt="Logan Carter - Mechanical Engineering Student"
+                    className="w-full h-auto rounded-xl object-cover"
+                  />
+                </div>
+                <motion.div
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="absolute -top-2 -right-2 px-2 py-1 glass rounded-lg"
+                >
+                  <span className="text-primary-400 font-mono text-[10px]">3.6 GPA</span>
+                </motion.div>
+              </div>
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -98,32 +117,6 @@ const Hero = () => {
                 ))}
               </div>
             </motion.div>
-          </motion.div>
-
-          {/* Mobile Profile Image */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative lg:hidden flex justify-center"
-          >
-            <div className="relative w-48 sm:w-56">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-orange-500/20 rounded-2xl blur-xl" />
-              <div className="relative glass rounded-2xl overflow-hidden p-2">
-                <img
-                  src="/images/profile/logan.jpg"
-                  alt="Logan Carter - Mechanical Engineering Student"
-                  className="w-full h-auto rounded-xl object-cover"
-                />
-              </div>
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute -top-2 -right-2 px-2 py-1 glass rounded-lg"
-              >
-                <span className="text-primary-400 font-mono text-xs">3.6 GPA</span>
-              </motion.div>
-            </div>
           </motion.div>
 
           {/* Desktop - Profile Image & Engineering Card */}
