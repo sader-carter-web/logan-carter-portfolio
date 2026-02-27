@@ -10,45 +10,51 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ParticleBackground from './components/ParticleBackground'
 import NotFound from './components/NotFound'
+import LoadingScreen from './components/LoadingScreen'
+import CustomCursor from './components/CustomCursor'
 
 function App() {
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded,       setIsLoaded]       = useState(false)
+  const [loadingDone,    setLoadingDone]    = useState(false)
 
   useEffect(() => {
     setIsLoaded(true)
   }, [])
 
-  const path = window.location.pathname
+  const path   = window.location.pathname
   const isHome = path === '/' || path === '/index.html'
 
   if (!isHome && !path.startsWith('/documents/') && !path.startsWith('/images/')) {
     return (
       <div className={`relative min-h-screen transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+        <CustomCursor />
         <ParticleBackground />
         <Navbar />
-        <main>
-          <NotFound />
-        </main>
+        <main><NotFound /></main>
         <Footer />
       </div>
     )
   }
 
   return (
-    <div className={`relative min-h-screen transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-      <ParticleBackground />
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Education />
-        <Projects />
-        <Experience />
-        <Skills />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <CustomCursor />
+      {!loadingDone && <LoadingScreen onComplete={() => setLoadingDone(true)} />}
+      <div className={`relative min-h-screen transition-opacity duration-700 ${loadingDone ? 'opacity-100' : 'opacity-0'}`}>
+        <ParticleBackground />
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Education />
+          <Projects />
+          <Experience />
+          <Skills />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+    </>
   )
 }
 

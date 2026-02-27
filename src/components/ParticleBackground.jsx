@@ -1,90 +1,59 @@
-import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
-const ParticleBackground = () => {
-  const canvasRef = useRef(null)
+// Floating engineering annotations — very subtle, drift in and out
+const annotations = [
+  { x: '8%',  y: '18%', text: 'REF PLANE A',        delay: 0  },
+  { x: '82%', y: '22%', text: 'Ø 24.50 ±0.02',      delay: 4  },
+  { x: '6%',  y: '65%', text: 'TOL ±0.005"',         delay: 8  },
+  { x: '78%', y: '72%', text: 'R 12.0 TYP',          delay: 2  },
+  { x: '48%', y: '8%',  text: 'SECTION A-A',         delay: 6  },
+  { x: '86%', y: '50%', text: '3× M6×1.0 THRU',     delay: 10 },
+  { x: '14%', y: '85%', text: 'DRAWN: LC',           delay: 3  },
+  { x: '60%', y: '90%', text: 'SCALE: 1:1',          delay: 7  },
+  { x: '35%', y: '14%', text: '↑ NORTH REF',         delay: 5  },
+  { x: '72%', y: '38%', text: 'MAX STRESS: 245 MPa', delay: 9  },
+]
 
-  useEffect(() => {
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d')
-    let animationFrameId
-    let particles = []
+const ParticleBackground = () => (
+  <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+    {annotations.map((a, i) => (
+      <motion.span
+        key={i}
+        className="absolute font-mono text-[9px] text-blueprint-500/10 whitespace-nowrap select-none"
+        style={{ left: a.x, top: a.y }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 0.5, 0.5, 0] }}
+        transition={{
+          duration: 7,
+          delay: a.delay,
+          repeat: Infinity,
+          repeatDelay: annotations.length * 1.4,
+          ease: 'easeInOut',
+        }}
+      >
+        {a.text}
+      </motion.span>
+    ))}
 
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
+    {/* Origin crosshair — bottom left */}
+    <div className="absolute bottom-6 left-6 opacity-[0.08]">
+      <svg width="44" height="44" viewBox="0 0 44 44">
+        <line x1="22" y1="0"  x2="22" y2="44" stroke="#0ea5e9" strokeWidth="0.6" />
+        <line x1="0"  y1="22" x2="44" y2="22" stroke="#0ea5e9" strokeWidth="0.6" />
+        <circle cx="22" cy="22" r="2.5" fill="#0ea5e9" />
+        <circle cx="22" cy="22" r="8"   fill="none" stroke="#0ea5e9" strokeWidth="0.4" />
+      </svg>
+    </div>
 
-    const createParticles = () => {
-      particles = []
-      const particleCount = Math.floor((canvas.width * canvas.height) / 15000)
-
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          radius: Math.random() * 2 + 1,
-          opacity: Math.random() * 0.5 + 0.2,
-        })
-      }
-    }
-
-    const drawParticles = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      particles.forEach((particle, i) => {
-        particle.x += particle.vx
-        particle.y += particle.vy
-
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
-
-        ctx.beginPath()
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(245, 158, 11, ${particle.opacity})`
-        ctx.fill()
-
-        particles.slice(i + 1).forEach((otherParticle) => {
-          const dx = particle.x - otherParticle.x
-          const dy = particle.y - otherParticle.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-
-          if (distance < 150) {
-            ctx.beginPath()
-            ctx.moveTo(particle.x, particle.y)
-            ctx.lineTo(otherParticle.x, otherParticle.y)
-            ctx.strokeStyle = `rgba(245, 158, 11, ${0.1 * (1 - distance / 150)})`
-            ctx.stroke()
-          }
-        })
-      })
-
-      animationFrameId = requestAnimationFrame(drawParticles)
-    }
-
-    resizeCanvas()
-    createParticles()
-    drawParticles()
-
-    const handleResize = () => {
-      resizeCanvas()
-      createParticles()
-    }
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      cancelAnimationFrame(animationFrameId)
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 -z-10 pointer-events-none opacity-40"
-    />
-  )
-}
+    {/* Secondary mark — top right */}
+    <div className="absolute top-20 right-6 opacity-[0.06]">
+      <svg width="30" height="30" viewBox="0 0 30 30">
+        <line x1="15" y1="0"  x2="15" y2="30" stroke="#f59e0b" strokeWidth="0.5" />
+        <line x1="0"  y1="15" x2="30" y2="15" stroke="#f59e0b" strokeWidth="0.5" />
+        <circle cx="15" cy="15" r="1.5" fill="#f59e0b" />
+      </svg>
+    </div>
+  </div>
+)
 
 export default ParticleBackground

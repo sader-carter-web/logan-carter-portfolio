@@ -11,27 +11,28 @@
 
   body {
     @apply bg-dark-950 text-dark-100 font-sans antialiased;
+    background-image:
+      linear-gradient(rgba(14, 165, 233, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14, 165, 233, 0.045) 1px, transparent 1px),
+      linear-gradient(rgba(14, 165, 233, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14, 165, 233, 0.018) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    background-position: -1px -1px;
+  }
+
+  /* Hide native cursor on desktop — CustomCursor takes over */
+  @media (min-width: 1024px) {
+    * { cursor: none !important; }
   }
 
   ::selection {
-    @apply bg-primary-500/30 text-white;
+    @apply bg-blueprint-500/30 text-white;
   }
 
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-dark-900;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-dark-700 rounded-full;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-dark-600;
-  }
+  ::-webkit-scrollbar       { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-dark-900; }
+  ::-webkit-scrollbar-thumb { @apply bg-dark-700 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-blueprint-700; }
 }
 
 @layer components {
@@ -39,26 +40,20 @@
     @apply bg-gradient-to-r from-primary-400 via-primary-500 to-orange-400 bg-clip-text text-transparent;
   }
 
-  .gradient-border {
-    @apply relative;
-  }
-
-  .gradient-border::before {
-    content: '';
-    @apply absolute inset-0 rounded-lg p-[1px];
-    background: linear-gradient(135deg, #f59e0b, #ea580c, #f59e0b);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+  .blueprint-text {
+    @apply bg-gradient-to-r from-blueprint-400 to-blueprint-300 bg-clip-text text-transparent;
   }
 
   .glass {
     @apply bg-dark-900/50 backdrop-blur-xl border border-dark-700/50;
   }
 
+  .glass-blueprint {
+    @apply bg-dark-900/60 backdrop-blur-xl border border-blueprint-500/20;
+  }
+
   .card-hover {
-    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary-500/10;
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-blueprint-500/10;
   }
 
   .btn-primary {
@@ -70,6 +65,12 @@
   .btn-secondary {
     @apply px-6 py-3 border border-primary-500/50 text-primary-400 font-semibold rounded-lg
            transition-all duration-300 hover:bg-primary-500/10 hover:border-primary-400
+           active:scale-95;
+  }
+
+  .btn-blueprint {
+    @apply px-6 py-3 border border-blueprint-500/50 text-blueprint-400 font-semibold rounded-lg
+           transition-all duration-300 hover:bg-blueprint-500/10 hover:border-blueprint-400
            active:scale-95;
   }
 
@@ -85,25 +86,36 @@
     @apply px-3 py-1 text-sm font-mono bg-dark-800/80 text-primary-400 rounded-full
            border border-dark-700/50 hover:border-primary-500/50 transition-colors;
   }
+
+  .blueprint-badge {
+    @apply px-3 py-1 text-xs font-mono bg-blueprint-950/60 text-blueprint-400 rounded-full
+           border border-blueprint-700/40 hover:border-blueprint-500/60 transition-colors;
+  }
+
+  /* Engineering drawing corner brackets */
+  .corner-tl { @apply absolute top-3 left-3  w-6 h-6 border-l border-t border-blueprint-500/40; }
+  .corner-tr { @apply absolute top-3 right-3 w-6 h-6 border-r border-t border-blueprint-500/40; }
+  .corner-bl { @apply absolute bottom-3 left-3  w-6 h-6 border-l border-b border-blueprint-500/40; }
+  .corner-br { @apply absolute bottom-3 right-3 w-6 h-6 border-r border-b border-blueprint-500/40; }
+
+  .spec-label {
+    @apply font-mono text-[10px] text-dark-500 tracking-wider uppercase w-28 shrink-0;
+  }
+
+  .spec-value {
+    @apply font-mono text-xs text-dark-200;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  .text-balance { text-wrap: balance; }
 
   .animate-in {
     animation: animateIn 0.5s ease-out forwards;
   }
 
   @keyframes animateIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 }

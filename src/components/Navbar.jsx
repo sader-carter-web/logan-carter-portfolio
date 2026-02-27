@@ -3,25 +3,28 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Linkedin, FileText } from 'lucide-react'
 
 const navLinks = [
-  { name: 'About', href: '#about' },
-  { name: 'Education', href: '#education' },
-  { name: 'Projects', href: '#projects' },
+  { name: 'About',      href: '#about'      },
+  { name: 'Education',  href: '#education'  },
+  { name: 'Projects',   href: '#projects'   },
   { name: 'Experience', href: '#experience' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Skills',     href: '#skills'     },
+  { name: 'Contact',    href: '#contact'    },
 ]
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [isOpen,    setIsOpen]    = useState(false)
+  const [scrolled,  setScrolled]  = useState(false)
+  const [scrollPct, setScrollPct] = useState(0)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+    const onScroll = () => {
+      const s   = window.scrollY
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      setScrolled(s > 50)
+      setScrollPct(max > 0 ? Math.round((s / max) * 100) : 0)
     }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
@@ -33,39 +36,57 @@ const Navbar = () => {
         scrolled ? 'glass py-3' : 'py-5'
       }`}
     >
+      {/* Scroll progress bar */}
+      <div
+        className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-blueprint-700 to-blueprint-400 transition-all duration-100"
+        style={{ width: `${scrollPct}%` }}
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <motion.a
-            href="#"
-            className="text-2xl font-bold gradient-text"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            LC
+
+          {/* Logo */}
+          <motion.a href="#" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2">
+            <div className="relative w-9 h-9">
+              <svg viewBox="0 0 36 36" className="w-full h-full">
+                <rect x="1" y="1" width="34" height="34" rx="4" fill="none" stroke="#0ea5e9" strokeWidth="0.8" strokeOpacity="0.35" />
+                <line x1="1"  y1="18" x2="7"  y2="18" stroke="#0ea5e9" strokeWidth="0.6" strokeOpacity="0.3" />
+                <line x1="29" y1="18" x2="35" y2="18" stroke="#0ea5e9" strokeWidth="0.6" strokeOpacity="0.3" />
+                <line x1="18" y1="1"  x2="18" y2="7"  stroke="#0ea5e9" strokeWidth="0.6" strokeOpacity="0.3" />
+                <line x1="18" y1="29" x2="18" y2="35" stroke="#0ea5e9" strokeWidth="0.6" strokeOpacity="0.3" />
+              </svg>
+              <span className="absolute inset-0 flex items-center justify-center font-mono font-bold text-sm gradient-text">LC</span>
+            </div>
           </motion.a>
 
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center space-x-7">
             {navLinks.map((link) => (
               <motion.a
                 key={link.name}
                 href={link.href}
-                className="text-dark-300 hover:text-primary-400 transition-colors font-medium"
+                className="relative text-dark-400 hover:text-white transition-colors font-medium text-sm tracking-wide group"
                 whileHover={{ y: -2 }}
               >
                 {link.name}
+                <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-blueprint-500 transition-all duration-300 group-hover:w-full" />
               </motion.a>
             ))}
           </div>
 
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Right actions */}
+          <div className="hidden md:flex items-center gap-4">
+            <span className="font-mono text-[9px] text-dark-700 tracking-widest hidden lg:block select-none">
+              Y:{String(scrollPct).padStart(3, '0')}%
+            </span>
             <motion.a
               href="https://www.linkedin.com/in/logan-carter-35h/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-dark-400 hover:text-primary-400 transition-colors"
+              className="text-dark-500 hover:text-blueprint-400 transition-colors"
               whileHover={{ y: -2, scale: 1.1 }}
             >
-              <Linkedin size={20} />
+              <Linkedin size={18} />
             </motion.a>
             <motion.a
               href="/documents/Logan-Carter-Resume.pdf"
@@ -75,7 +96,7 @@ const Navbar = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <FileText size={16} />
+              <FileText size={15} />
               Resume
             </motion.a>
           </div>
@@ -103,24 +124,23 @@ const Navbar = () => {
                 <motion.a
                   key={link.name}
                   href={link.href}
-                  className="block text-dark-300 hover:text-primary-400 transition-colors font-medium"
+                  className="block text-dark-300 hover:text-blueprint-400 transition-colors font-medium"
                   onClick={() => setIsOpen(false)}
-                  whileHover={{ x: 10 }}
+                  whileHover={{ x: 8 }}
                 >
+                  <span className="font-mono text-blueprint-600 text-xs mr-2">▸</span>
                   {link.name}
                 </motion.a>
               ))}
-              <div className="flex items-center justify-between pt-4 border-t border-dark-700">
-                <div className="flex items-center space-x-4">
-                  <a
-                    href="https://www.linkedin.com/in/logan-carter-35h/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-dark-400 hover:text-primary-400 transition-colors"
-                  >
-                    <Linkedin size={20} />
-                  </a>
-                </div>
+              <div className="flex items-center justify-between pt-4 border-t border-dark-700/50">
+                <a
+                  href="https://www.linkedin.com/in/logan-carter-35h/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-dark-400 hover:text-blueprint-400 transition-colors"
+                >
+                  <Linkedin size={20} />
+                </a>
                 <a
                   href="/documents/Logan-Carter-Resume.pdf"
                   target="_blank"
@@ -128,7 +148,7 @@ const Navbar = () => {
                   className="btn-primary text-sm py-2 px-4 flex items-center gap-2"
                   onClick={() => setIsOpen(false)}
                 >
-                  <FileText size={16} />
+                  <FileText size={15} />
                   Resume
                 </a>
               </div>

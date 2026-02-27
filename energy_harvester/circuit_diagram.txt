@@ -1,0 +1,108 @@
+
+ENERGY HARVESTER - CIRCUIT DIAGRAM
+====================================
+
+                         +5V (Arduino)
+                          |
+                          |
+    DC MOTOR/             |
+    GENERATOR             |
+    +---------+           |
+    |         |           |
+    |  M / G  |           |
+    |         |           |
+    +----+----+           |
+         |    |           |
+         |    |           |
+   wire+ |    | wire-     |
+         |    |           |
+         |    +-----+-----+------- GND (Arduino)
+         |    |     |
+         |    |     |
+         |   [R1]   |
+         |   100    |
+         |   ohm    |
+         |   (load) |
+         |    |     |
+         +----+     |
+         |          |
+         +----------+----------- A0 (Arduino Analog Pin)
+
+
+    ARDUINO UNO
+    +-------------------------+
+    |                         |
+    |  A0 <-- Voltage In      |
+    |                         |
+    |  Pin 2 --> LED 1        |
+    |  Pin 3 --> LED 2        |
+    |  Pin 4 --> LED 3        |
+    |  Pin 5 --> LED 4        |
+    |  Pin 6 --> LED 5        |
+    |                         |
+    |  GND --- Common Ground  |
+    |                         |
+    |  USB --- To Computer    |
+    |          (MATLAB)       |
+    +-------------------------+
+
+
+    LED WIRING (same for all 5 LEDs)
+    ==========================================
+
+    Arduino Pin (2,3,4,5,6)
+         |
+         |
+        [R]  220 ohm resistor
+         |
+         |
+        LED  (long leg / anode)
+         |
+        LED  (short leg / cathode)
+         |
+         |
+        GND
+
+
+    FULL LED LAYOUT ON BREADBOARD
+    ==========================================
+
+    Arduino                    Breadboard
+    Pin 2  ---[220 ohm]---+---LED1---+
+    Pin 3  ---[220 ohm]---+---LED2---+
+    Pin 4  ---[220 ohm]---+---LED3---+--- GND Rail
+    Pin 5  ---[220 ohm]---+---LED4---+
+    Pin 6  ---[220 ohm]---+---LED5---+
+
+
+    VOLTAGE DIVIDER (only needed if motor generates > 5V)
+    =====================================================
+    Only add this if your motor outputs more than 5V!
+    Most small DC motors won't, so try without it first.
+
+    Motor (+) ----+
+                  |
+                [R3] 10K ohm
+                  |
+                  +----------- A0 (Arduino)
+                  |
+                [R4] 10K ohm
+                  |
+    Motor (-) ----+----------- GND
+
+
+    With this divider, Arduino sees HALF the motor voltage.
+    Update dividerRatio = 2.0 in the Arduino code.
+
+
+    PHYSICAL LAYOUT SUMMARY
+    =====================================================
+
+    [DC Motor] ---> [100 ohm load resistor] ---> [Arduino A0]
+                                             |
+                                            GND
+                                             |
+    [Arduino Pin 2-6] ---> [220 ohm each] ---> [5 LEDs] ---> [GND]
+                                             |
+    [Arduino USB] --------------------------> [Computer running MATLAB]
+
