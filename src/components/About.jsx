@@ -1,122 +1,185 @@
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { GraduationCap, Award, Target, Users } from 'lucide-react'
 
-const About = () => {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+const StatBlock = ({ value, label, delay, isInView }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={isInView ? { opacity: 1, y: 0 } : {}}
+    transition={{ duration: 0.5, delay }}
+    className="relative group"
+  >
+    <div className="text-5xl sm:text-6xl font-bold gradient-text leading-none mb-1 font-mono">
+      {value}
+    </div>
+    <div className="font-mono text-[10px] text-dark-600 tracking-[0.2em] uppercase">{label}</div>
+  </motion.div>
+)
 
-  const highlights = [
-    {
-      icon: GraduationCap,
-      title: "B.S. Mechanical Engineering",
-      description: "University of Colorado Boulder",
-      detail: "Minors: Math & Aerospace"
-    },
-    {
-      icon: Award,
-      title: "Dean's List",
-      description: "Fall 2024 / Spring 2025",
-      detail: "Honors College | 3.6 GPA"
-    },
-    {
-      icon: Target,
-      title: "Naval Academy Accepted",
-      description: "Class of 2028",
-      detail: "Medical disqualification"
-    },
-    {
-      icon: Users,
-      title: "Leadership & Service",
-      description: "Engineers for a Sustainable World",
-      detail: "Leaders in Action"
-    }
-  ]
+const highlights = [
+  {
+    icon: GraduationCap,
+    title:  'B.S. Mechanical Engineering',
+    sub:    'University of Colorado Boulder',
+    detail: 'Minors: Mathematics & Aerospace',
+    color:  '#0ea5e9',
+  },
+  {
+    icon: Award,
+    title:  "Dean's List",
+    sub:    'Fall 2024 / Spring 2025',
+    detail: 'Honors College  |  3.6 GPA',
+    color:  '#f59e0b',
+  },
+  {
+    icon: Target,
+    title:  'Naval Academy Accepted',
+    sub:    'Class of 2028',
+    detail: 'Medical disqualification',
+    color:  '#8b5cf6',
+  },
+  {
+    icon: Users,
+    title:  'Leadership & Service',
+    sub:    'Engineers for a Sustainable World',
+    detail: 'Leaders in Action',
+    color:  '#10b981',
+  },
+]
+
+const About = () => {
+  const ref      = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
     <section id="about" className="py-24 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* ── Section identifier ──────────────────────────────── */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, x: -30 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-4 mb-12"
         >
-          <h2 className="section-heading">
-            About <span className="gradient-text">Me</span>
+          <div className="relative">
+            <div className="absolute -top-1 -left-1 w-3 h-3 border-l border-t border-blueprint-500/60" />
+            <div className="absolute -bottom-1 -left-1 w-3 h-3 border-l border-b border-blueprint-500/60" />
+            <span className="font-mono text-[10px] text-blueprint-400/60 tracking-[0.35em] uppercase px-3">
+              Section A-A
+            </span>
+          </div>
+          <div className="h-[1px] flex-1 bg-gradient-to-r from-blueprint-500/30 to-transparent" />
+          <span className="font-mono text-[9px] text-dark-700 tracking-widest hidden sm:block">
+            DWG: LC-ABOUT-001
+          </span>
+        </motion.div>
+
+        {/* ── Big statement ────────────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="mb-14"
+        >
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white mb-4">
+            Meet the{' '}
+            <span className="gradient-text">Engineer</span>
           </h2>
-          <p className="section-subheading mx-auto">
-            An ambitious engineer driven by creativity, analytical precision, and a passion for solving complex problems.
+          <p className="text-dark-500 text-sm font-mono tracking-widest uppercase">
+            Mechanical · Analytical · Driven
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="space-y-6 text-dark-300 leading-relaxed">
-              <p>
-                I'm a <span className="text-primary-400 font-medium">Mechanical Engineering student</span> at
-                the University of Colorado Boulder with minors in Math and Aerospace Engineering. My engineering
-                journey is fueled by a deep curiosity for how things work and a drive to design innovative solutions.
-              </p>
-              <p>
-                Before transferring to CU Boulder, I completed coursework at{' '}
-                <span className="text-primary-400 font-medium">UMass Lowell</span> where
-                I made Dean's List and was part of the Honors College. I was also accepted into the{' '}
-                <span className="text-primary-400 font-medium">United States Naval Academy</span> Class
-                of 2028, demonstrating my commitment to discipline and service.
-              </p>
-              <p>
-                I bring a unique combination of{' '}
-                <span className="text-primary-400 font-medium">technical expertise and leadership</span> to
-                every project. Whether it's executing multi-phase design projects, leading construction
-                initiatives, or building websites for small businesses, I thrive on challenges that push
-                me to grow.
-              </p>
-            </div>
+        {/* ── Stats row ───────────────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.4, delay: 0.15 }}
+          className="flex flex-wrap gap-8 sm:gap-14 mb-16 pb-10 border-b border-dark-800/60"
+        >
+          <StatBlock value="3.6" label="GPA" delay={0.2} isInView={isInView} />
+          <StatBlock value="2"   label="Universities" delay={0.3} isInView={isInView} />
+          <StatBlock value="4+"  label="Yrs Experience" delay={0.4} isInView={isInView} />
+          <StatBlock value="3"   label="Projects" delay={0.5} isInView={isInView} />
+        </motion.div>
 
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-8">
-              {[
-                { value: "3.6", label: "GPA" },
-                { value: "2", label: "Universities" },
-                { value: "4+", label: "Years Experience" }
-              ].map((stat) => (
-                <div key={stat.label} className="text-center p-3 sm:p-4 glass rounded-lg">
-                  <div className="text-xl sm:text-2xl font-bold gradient-text">{stat.value}</div>
-                  <div className="text-dark-500 text-xs sm:text-sm mt-1">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+        {/* ── Two-column body ─────────────────────────────────── */}
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-start">
+
+          {/* Story */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="space-y-6"
+          >
+            {[
+              <>
+                I'm a{' '}
+                <span className="text-blueprint-300 font-medium">Mechanical Engineering student</span>{' '}
+                at the University of Colorado Boulder with minors in Mathematics and Aerospace Engineering.
+                My engineering journey is fueled by a deep curiosity for how things work and a drive to
+                design innovative solutions.
+              </>,
+              <>
+                Before transferring to CU Boulder, I completed coursework at{' '}
+                <span className="text-blueprint-300 font-medium">UMass Lowell</span>{' '}
+                where I made Dean's List and was part of the Honors College. I was also accepted into the{' '}
+                <span className="text-blueprint-300 font-medium">United States Naval Academy</span>{' '}
+                Class of 2028, demonstrating my commitment to discipline and service.
+              </>,
+              <>
+                I bring a unique combination of{' '}
+                <span className="text-blueprint-300 font-medium">technical expertise and leadership</span>{' '}
+                to every project. Whether executing multi-phase design projects, leading construction
+                initiatives, or building client websites — I thrive on challenges that push me to grow.
+              </>,
+            ].map((para, i) => (
+              <motion.p
+                key={i}
+                initial={{ opacity: 0, y: 12 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.35 + i * 0.12 }}
+                className="text-dark-300 leading-relaxed text-base border-l-2 border-blueprint-500/20 pl-4"
+              >
+                {para}
+              </motion.p>
+            ))}
           </motion.div>
 
+          {/* Highlight cards */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
             className="grid grid-cols-1 sm:grid-cols-2 gap-4"
           >
-            {highlights.map((item, index) => (
+            {highlights.map((item, i) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                className="group p-4 sm:p-6 glass rounded-xl card-hover"
+                transition={{ duration: 0.45, delay: 0.5 + i * 0.1 }}
+                className="group relative glass rounded-xl p-5 card-hover overflow-hidden"
               >
-                <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition-colors">
-                  <item.icon className="text-primary-400" size={24} />
+                {/* Top accent line */}
+                <div className="absolute top-0 left-0 right-0 h-[2px]"
+                  style={{ background: `linear-gradient(90deg, ${item.color}, transparent)` }} />
+
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-4 transition-colors"
+                  style={{ backgroundColor: `${item.color}18`, border: `1px solid ${item.color}35` }}>
+                  <item.icon size={20} style={{ color: item.color }} />
                 </div>
-                <h3 className="text-white font-semibold mb-1">{item.title}</h3>
-                <p className="text-dark-400 text-sm mb-1">{item.description}</p>
-                <p className="text-dark-500 text-xs">{item.detail}</p>
+
+                <h3 className="text-white font-semibold text-sm mb-1 leading-snug">{item.title}</h3>
+                <p className="text-dark-400 text-xs mb-1">{item.sub}</p>
+                <p className="font-mono text-[10px]" style={{ color: `${item.color}90` }}>{item.detail}</p>
               </motion.div>
             ))}
           </motion.div>
+
         </div>
       </div>
     </section>

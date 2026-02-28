@@ -1,128 +1,47 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+} from 'framer-motion'
 import { ChevronDown, Cog, PenTool, Ruler, Wrench, Linkedin } from 'lucide-react'
-import { useState } from 'react'
-
-const ImageWithLoader = ({ src, alt, className }) => {
-  const [loaded, setLoaded] = useState(false)
-  return (
-    <div className="relative">
-      {!loaded && <div className={`${className} bg-dark-800 animate-pulse`} />}
-      <img
-        src={src} alt={alt}
-        className={`${className} transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
-        onLoad={() => setLoaded(true)}
-      />
-    </div>
-  )
-}
-
-// Technical Specification Sheet — replaces the JSON code block
-const SpecSheet = () => {
-  const rows = [
-    { label: 'ENGINEER',     value: 'Logan Carter',                      highlight: false },
-    { label: 'INSTITUTION',  value: 'University of Colorado Boulder',     highlight: false },
-    { label: 'MAJOR',        value: 'Mechanical Engineering',             highlight: false },
-    { label: 'MINORS',       value: 'Mathematics  |  Aerospace Eng.',     highlight: false },
-    { label: 'GPA',          value: '3.6 / 4.0',                         mono: true       },
-    { label: 'CLASS',        value: 'Junior — Expected Dec. 2027',        highlight: false },
-    { divider: true },
-    { label: 'STATUS',       value: '⬤  SEEKING INTERNSHIP',             green: true      },
-    { divider: true },
-    { label: 'CAD',          value: 'SolidWorks · Pro-E / Creo',         mono: true       },
-    { label: 'ANALYSIS',     value: 'MATLAB · Ansys FEA · 3D Printing',  mono: true       },
-    { label: 'DOMAINS',      value: 'Design · Manufacturing · Aerospace', highlight: false },
-  ]
-
-  return (
-    <div className="relative glass-blueprint rounded-xl overflow-hidden">
-      {/* Title bar */}
-      <div className="flex items-center gap-2 px-4 py-2.5 bg-blueprint-950/40 border-b border-blueprint-500/20">
-        <div className="flex gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-          <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-        </div>
-        <span className="font-mono text-[10px] text-blueprint-400/60 ml-2 tracking-wider">
-          TECHNICAL SPECIFICATION // DWG NO: LC-001-A
-        </span>
-        <span className="ml-auto font-mono text-[9px] text-dark-600">REV: C</span>
-      </div>
-
-      {/* Spec rows */}
-      <div className="relative p-4 space-y-[3px]">
-        {/* Animated scan line */}
-        <motion.div
-          className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blueprint-400/40 to-transparent pointer-events-none"
-          initial={{ top: 10, opacity: 0.8 }}
-          animate={{ top: 180, opacity: 0 }}
-          transition={{ duration: 1.8, delay: 0.6, ease: 'linear' }}
-        />
-
-        {rows.map((row, i) => {
-          if (row.divider) {
-            return (
-              <motion.div
-                key={`div-${i}`}
-                initial={{ opacity: 0, scaleX: 0 }}
-                animate={{ opacity: 1, scaleX: 1 }}
-                transition={{ delay: 0.5 + i * 0.07, duration: 0.3 }}
-                className="my-1.5 border-t border-dark-700/40 origin-left"
-              />
-            )
-          }
-          return (
-            <motion.div
-              key={row.label}
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 + i * 0.07 }}
-              className="flex items-baseline gap-2"
-            >
-              <span className="spec-label">{row.label}</span>
-              <span className="font-mono text-[10px] text-dark-600 shrink-0">:</span>
-              <span className={
-                row.green
-                  ? 'font-mono text-xs text-green-400'
-                  : row.mono
-                  ? 'font-mono text-xs text-blueprint-300'
-                  : 'text-sm text-dark-200'
-              }>
-                {row.value}
-              </span>
-            </motion.div>
-          )
-        })}
-      </div>
-
-      {/* Footer title block */}
-      <div className="px-4 py-2 bg-dark-900/60 border-t border-dark-700/30 flex items-center justify-between">
-        <span className="font-mono text-[8px] text-dark-700 tracking-wider">DRAWN BY: LC // DATE: 2025 // SCALE: N/A</span>
-        <span className="font-mono text-[8px] text-dark-700 tracking-wider">SHEET 1 OF 1</span>
-      </div>
-
-      {/* Corner brackets */}
-      <div className="corner-tl" />
-      <div className="corner-tr" />
-      <div className="corner-bl" />
-      <div className="corner-br" />
-    </div>
-  )
-}
+import EngineerScene from './EngineerScene'
 
 const Hero = () => {
-  const { scrollY }    = useScroll()
-  const scrollOpacity  = useTransform(scrollY, [0, 200], [1, 0])
+  const { scrollY }   = useScroll()
+  const scrollOpacity = useTransform(scrollY, [0, 220], [1, 0])
+
+  // Mouse parallax
+  const rawX = useMotionValue(0)
+  const rawY = useMotionValue(0)
+  const spring = { stiffness: 60, damping: 22 }
+  const sceneX = useSpring(useTransform(rawX, [-0.5, 0.5], [-14, 14]), spring)
+  const sceneY = useSpring(useTransform(rawY, [-0.5, 0.5], [-9, 9]), spring)
+  const bgX    = useSpring(useTransform(rawX, [-0.5, 0.5], [10, -10]), spring)
+  const bgY    = useSpring(useTransform(rawY, [-0.5, 0.5], [7, -7]), spring)
+
+  const onMouseMove = (e) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect()
+    rawX.set((e.clientX - left - width  / 2) / width)
+    rawY.set((e.clientY - top  - height / 2) / height)
+  }
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-14 lg:pt-20">
+    <section
+      className="min-h-screen flex items-center justify-center relative overflow-hidden pt-14 lg:pt-20"
+      onMouseMove={onMouseMove}
+    >
       {/* Ambient glows */}
-      <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-blueprint-500/10 rounded-full blur-3xl animate-pulse-slow" />
-      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-primary-500/10 rounded-full blur-3xl animate-pulse-slow delay-1000" />
+      <motion.div style={{ x: bgX, y: bgY }}
+        className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-blueprint-500/10 rounded-full blur-3xl animate-pulse-slow" />
+      <motion.div style={{ x: bgX, y: bgY }}
+        className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-primary-500/10 rounded-full blur-3xl animate-pulse-slow delay-1000" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 w-full">
+        <div className="grid lg:grid-cols-[1fr_1.45fr] gap-10 items-center">
 
-          {/* ── LEFT SIDE ── */}
+          {/* ── LEFT: Text content ──────────────────────────── */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -136,7 +55,9 @@ const Hero = () => {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blueprint-500/10 border border-blueprint-500/25 mb-6"
             >
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-sm text-blueprint-300 font-mono tracking-wide">SEEKING ENGINEERING INTERNSHIPS</span>
+              <span className="text-sm text-blueprint-300 font-mono tracking-wide">
+                SEEKING ENGINEERING INTERNSHIPS
+              </span>
             </motion.div>
 
             {/* Mobile: inline photo + name */}
@@ -185,27 +106,25 @@ const Hero = () => {
               analytical precision and creative problem solving.
             </motion.p>
 
+            {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
               className="flex flex-wrap gap-4"
             >
-              <a href="/documents/Logan-Carter-Resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-primary">
+              <a href="/documents/Logan-Carter-Resume.pdf" target="_blank" rel="noopener noreferrer"
+                className="btn-primary">
                 View My Resume
               </a>
-              <a
-                href="https://www.linkedin.com/in/logan-carter-35h/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-blueprint flex items-center gap-2"
-              >
+              <a href="https://www.linkedin.com/in/logan-carter-35h/" target="_blank" rel="noopener noreferrer"
+                className="btn-blueprint flex items-center gap-2">
                 <Linkedin size={18} />
                 LinkedIn
               </a>
             </motion.div>
 
-            {/* Core tools strip */}
+            {/* Core tools strip (desktop only) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -252,41 +171,17 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* ── RIGHT SIDE ── */}
+          {/* ── RIGHT: EngineerScene (desktop) ──────────────── */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative hidden lg:flex flex-col gap-6 -mt-6"
+            className="hidden lg:block"
+            style={{ x: sceneX, y: sceneY }}
           >
-            {/* Profile photo */}
-            <div className="relative w-[58%] mx-auto">
-              <div className="absolute inset-0 bg-gradient-to-br from-blueprint-500/15 to-primary-500/15 rounded-2xl blur-xl" />
-              <div className="relative glass-blueprint rounded-2xl overflow-hidden p-2">
-                <ImageWithLoader
-                  src="/images/profile/logan.jpg"
-                  alt="Logan Carter — Mechanical Engineering Student"
-                  className="w-full h-auto rounded-xl object-cover"
-                />
-                {/* Corner brackets on photo */}
-                <div className="absolute top-3.5 left-3.5 w-5 h-5 border-l border-t border-blueprint-400/50" />
-                <div className="absolute top-3.5 right-3.5 w-5 h-5 border-r border-t border-blueprint-400/50" />
-                <div className="absolute bottom-3.5 left-3.5 w-5 h-5 border-l border-b border-blueprint-400/50" />
-                <div className="absolute bottom-3.5 right-3.5 w-5 h-5 border-r border-b border-blueprint-400/50" />
-              </div>
-              {/* GPA callout */}
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3.5, repeat: Infinity }}
-                className="absolute -top-3 -right-3 px-3 py-1.5 glass-blueprint rounded-lg"
-              >
-                <span className="font-mono text-xs text-blueprint-300">GPA: 3.6</span>
-              </motion.div>
-            </div>
-
-            {/* Technical Spec Sheet */}
-            <SpecSheet />
+            <EngineerScene />
           </motion.div>
+
         </div>
       </div>
 
