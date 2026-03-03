@@ -11,13 +11,26 @@
 
   body {
     @apply bg-dark-950 text-dark-100 font-sans antialiased;
+    /* Silver/white grid — CU Boulder colors (Gold, Silver, Black) */
     background-image:
-      linear-gradient(rgba(207, 184, 124, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(207, 184, 124, 0.04) 1px, transparent 1px),
-      linear-gradient(rgba(207, 184, 124, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(207, 184, 124, 0.015) 1px, transparent 1px);
+      linear-gradient(rgba(220, 220, 220, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(220, 220, 220, 0.045) 1px, transparent 1px),
+      linear-gradient(rgba(220, 220, 220, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(220, 220, 220, 0.018) 1px, transparent 1px);
     background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
     background-position: -1px -1px;
+    /* ── Saved alternatives ──────────────────────────────────
+       Gold grid:
+         linear-gradient(rgba(207, 184, 124, 0.04) 1px, transparent 1px),
+         linear-gradient(90deg, rgba(207, 184, 124, 0.04) 1px, transparent 1px),
+         linear-gradient(rgba(207, 184, 124, 0.015) 1px, transparent 1px),
+         linear-gradient(90deg, rgba(207, 184, 124, 0.015) 1px, transparent 1px)
+       Blue (original) grid:
+         linear-gradient(rgba(14, 165, 233, 0.045) 1px, transparent 1px),
+         linear-gradient(90deg, rgba(14, 165, 233, 0.045) 1px, transparent 1px),
+         linear-gradient(rgba(14, 165, 233, 0.018) 1px, transparent 1px),
+         linear-gradient(90deg, rgba(14, 165, 233, 0.018) 1px, transparent 1px)
+    ── */
   }
 
   /* Hide native cursor on desktop — CustomCursor takes over */
