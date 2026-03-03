@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import Marquee from './components/Marquee'
 import About from './components/About'
 import Education from './components/Education'
 import Projects from './components/Projects'
@@ -44,7 +43,6 @@ function App() {
         <Navbar />
         <main>
           <Hero />
-          <Marquee />
           <About />
           <Education />
           <Projects />
