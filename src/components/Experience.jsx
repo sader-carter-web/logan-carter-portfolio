@@ -37,7 +37,7 @@ const experiences = [
     location:'Andover, MA',
     period:  'June 2025 – Dec 2025',
     active:  true,
-    color:   '#0ea5e9',
+    color:   '#CFB87C',
     dwg:     'EXP-001',
     description: [
       'Recruiting intern sourcing information about professionals currently seeking new career opportunities in engineering and technology fields.',
@@ -104,11 +104,11 @@ const Experience = () => {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="h-[1px] w-12 bg-blueprint-500/40" />
-            <span className="font-mono text-[10px] text-blueprint-400/60 tracking-[0.35em] uppercase">
+            <div className="h-[1px] w-12 bg-cu-gold/40" />
+            <span className="font-mono text-[10px] text-cu-gold/60 tracking-[0.35em] uppercase">
               Work Log
             </span>
-            <div className="h-[1px] w-12 bg-blueprint-500/40" />
+            <div className="h-[1px] w-12 bg-cu-gold/40" />
           </div>
           <h2 className="section-heading">
             Professional <span className="gradient-text">Experience</span>
@@ -123,7 +123,7 @@ const Experience = () => {
 
           {/* Center vertical line */}
           <motion.div
-            className="absolute left-1/2 -translate-x-1/2 top-5 bottom-5 w-[1px] bg-gradient-to-b from-blueprint-500/30 via-dark-700/60 to-transparent hidden md:block"
+            className="absolute left-1/2 -translate-x-1/2 top-5 bottom-5 w-[1px] bg-gradient-to-b from-cu-gold/30 via-dark-700/60 to-transparent hidden md:block"
             initial={{ scaleY: 0, opacity: 0 }}
             animate={isInView ? { scaleY: 1, opacity: 1 } : {}}
             transition={{ duration: 1.2, delay: 0.2 }}
