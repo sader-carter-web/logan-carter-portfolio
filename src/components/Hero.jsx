@@ -1,6 +1,14 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ChevronDown, Linkedin } from 'lucide-react'
 
+// Marquee items (rendered at bottom of hero so they're visible on first load)
+const marqueeItems = [
+  'CU BOULDER','MECHANICAL ENGINEERING','MATH MINOR','AEROSPACE MINOR',
+  'BOULDER, CO','SOLIDWORKS','MATLAB','ANSYS FEA','3D PRINTING','WEB DEVELOPER',
+  '603 WEBSITES','SKI ENTHUSIAST','GOLFER','INTERNSHIP READY','CLASS OF 2027',
+]
+const repeated = [...marqueeItems, ...marqueeItems, ...marqueeItems]
+
 const Hero = () => {
   const { scrollY } = useScroll()
   const scrollOpacity = useTransform(scrollY, [0, 220], [1, 0])
@@ -14,12 +22,13 @@ const Hero = () => {
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/75 to-black/40" />
-        <div className="absolute inset-0 bg-black/15" />
+        {/* Lighter overlay so the mountain is more visible */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/15" />
+        <div className="absolute inset-0 bg-black/10" />
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 min-h-screen flex items-center">
+      <div className="relative z-10 min-h-screen flex items-center pb-16">
         <div className="max-w-7xl mx-auto px-8 lg:px-16 w-full pt-20">
           <div className="grid lg:grid-cols-[1.35fr_0.65fr] gap-8 lg:gap-16 items-center">
 
@@ -60,14 +69,14 @@ const Hero = () => {
                 <div className="h-px w-14 bg-cu-gold" />
               </motion.div>
 
-              {/* Ghost last name */}
+              {/* Ghost last name — increased opacity so it reads clearly */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
                 className="overflow-hidden -mt-4 mb-6"
               >
-                <span className="text-[5rem] sm:text-[8rem] lg:text-[10rem] font-black leading-none tracking-tighter text-white/[0.07] uppercase select-none">
+                <span className="text-[5rem] sm:text-[8rem] lg:text-[10rem] font-black leading-none tracking-tighter text-white/[0.18] uppercase select-none">
                   CARTER
                 </span>
               </motion.div>
@@ -77,7 +86,7 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.65 }}
-                className="text-white/60 text-base sm:text-lg mb-10 font-light tracking-wide"
+                className="text-white/70 text-base sm:text-lg mb-10 font-light tracking-wide"
               >
                 Mechanical Engineering · Math &amp; Aerospace Minors · Boulder, CO
               </motion.p>
@@ -105,7 +114,7 @@ const Hero = () => {
                   href="https://www.linkedin.com/in/logan-carter-35h/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-8 py-4 border border-white/30 text-white/70 font-bold text-sm tracking-[0.15em] uppercase hover:border-white/60 hover:text-white transition-colors duration-200 flex items-center gap-2"
+                  className="px-8 py-4 border border-white/40 text-white/80 font-bold text-sm tracking-[0.15em] uppercase hover:border-white/70 hover:text-white transition-colors duration-200 flex items-center gap-2"
                 >
                   <Linkedin size={16} />
                   LINKEDIN
@@ -155,7 +164,7 @@ const Hero = () => {
       {/* Scroll cue — vertical on right */}
       <motion.div
         style={{ opacity: scrollOpacity }}
-        className="absolute bottom-8 right-8 z-10 hidden lg:flex flex-col items-center gap-3"
+        className="absolute bottom-20 right-8 z-10 hidden lg:flex flex-col items-center gap-3"
       >
         <span
           className="font-mono text-[10px] tracking-[0.2em] text-white/40 uppercase"
@@ -170,6 +179,20 @@ const Hero = () => {
           <ChevronDown size={18} className="text-cu-gold/60" />
         </motion.div>
       </motion.div>
+
+      {/* ── Gold ticker bar pinned to very bottom of hero ── */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 w-full overflow-hidden bg-cu-gold py-4 border-y border-cu-gold-dark">
+        <div className="flex whitespace-nowrap animate-marquee">
+          {repeated.map((item, i) => (
+            <span key={i} className="inline-flex items-center gap-6 px-6">
+              <span className="text-black font-black text-sm tracking-[0.2em] uppercase">
+                {item}
+              </span>
+              <span className="text-black/40 text-lg">·</span>
+            </span>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }
