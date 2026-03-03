@@ -38,7 +38,7 @@ const Navbar = () => {
     >
       {/* Scroll progress bar */}
       <div
-        className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-blueprint-700 to-blueprint-400 transition-all duration-100"
+        className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-cu-gold-dark to-cu-gold transition-all duration-100"
         style={{ width: `${scrollPct}%` }}
       />
 
@@ -49,11 +49,11 @@ const Navbar = () => {
           <motion.a href="#" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2">
             <div className="relative w-9 h-9">
               <svg viewBox="0 0 36 36" className="w-full h-full">
-                <rect x="1" y="1" width="34" height="34" rx="4" fill="none" stroke="#0ea5e9" strokeWidth="0.8" strokeOpacity="0.35" />
-                <line x1="1"  y1="18" x2="7"  y2="18" stroke="#0ea5e9" strokeWidth="0.6" strokeOpacity="0.3" />
-                <line x1="29" y1="18" x2="35" y2="18" stroke="#0ea5e9" strokeWidth="0.6" strokeOpacity="0.3" />
-                <line x1="18" y1="1"  x2="18" y2="7"  stroke="#0ea5e9" strokeWidth="0.6" strokeOpacity="0.3" />
-                <line x1="18" y1="29" x2="18" y2="35" stroke="#0ea5e9" strokeWidth="0.6" strokeOpacity="0.3" />
+                <rect x="1" y="1" width="34" height="34" rx="4" fill="none" stroke="#CFB87C" strokeWidth="0.8" strokeOpacity="0.35" />
+                <line x1="1"  y1="18" x2="7"  y2="18" stroke="#CFB87C" strokeWidth="0.6" strokeOpacity="0.3" />
+                <line x1="29" y1="18" x2="35" y2="18" stroke="#CFB87C" strokeWidth="0.6" strokeOpacity="0.3" />
+                <line x1="18" y1="1"  x2="18" y2="7"  stroke="#CFB87C" strokeWidth="0.6" strokeOpacity="0.3" />
+                <line x1="18" y1="29" x2="18" y2="35" stroke="#CFB87C" strokeWidth="0.6" strokeOpacity="0.3" />
               </svg>
               <span className="absolute inset-0 flex items-center justify-center font-mono font-bold text-sm gradient-text">LC</span>
             </div>
@@ -69,7 +69,7 @@ const Navbar = () => {
                 whileHover={{ y: -2 }}
               >
                 {link.name}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-blueprint-500 transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-cu-gold transition-all duration-300 group-hover:w-full" />
               </motion.a>
             ))}
           </div>
@@ -83,7 +83,7 @@ const Navbar = () => {
               href="https://www.linkedin.com/in/logan-carter-35h/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-dark-500 hover:text-blueprint-400 transition-colors"
+              className="text-dark-500 hover:text-cu-gold transition-colors"
               whileHover={{ y: -2, scale: 1.1 }}
             >
               <Linkedin size={18} />
@@ -124,11 +124,11 @@ const Navbar = () => {
                 <motion.a
                   key={link.name}
                   href={link.href}
-                  className="block text-dark-300 hover:text-blueprint-400 transition-colors font-medium"
+                  className="block text-dark-300 hover:text-cu-gold transition-colors font-medium"
                   onClick={() => setIsOpen(false)}
                   whileHover={{ x: 8 }}
                 >
-                  <span className="font-mono text-blueprint-600 text-xs mr-2">▸</span>
+                  <span className="font-mono text-cu-gold-dark text-xs mr-2">▸</span>
                   {link.name}
                 </motion.a>
               ))}
@@ -137,7 +137,7 @@ const Navbar = () => {
                   href="https://www.linkedin.com/in/logan-carter-35h/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-dark-400 hover:text-blueprint-400 transition-colors"
+                  className="text-dark-400 hover:text-cu-gold transition-colors"
                 >
                   <Linkedin size={20} />
                 </a>
