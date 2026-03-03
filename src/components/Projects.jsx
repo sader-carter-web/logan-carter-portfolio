@@ -322,7 +322,7 @@ const Projects = () => {
             <div className="flex items-center justify-between px-5 py-4 border-b border-dark-700/40">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${projects[1].accent}20`, border: `1px solid ${projects[1].accent}40` }}>
-                  <projects[1].icon size={18} style={{ color: projects[1].accent }} />
+                  <TreePine size={18} style={{ color: projects[1].accent }} />
                 </div>
                 <span className="font-mono text-[9px] text-dark-600 tracking-widest">{projects[1].dwgNo}</span>
               </div>
