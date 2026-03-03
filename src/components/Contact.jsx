@@ -55,15 +55,15 @@ const Contact = () => {
           <div className="space-y-6 mb-8">
             {contactInfo.map((item) => (
               <div key={item.label} className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center shrink-0">
-                  <item.icon className="text-primary-400" size={20} />
+                <div className="w-12 h-12 rounded-lg bg-cu-gold/10 flex items-center justify-center shrink-0">
+                  <item.icon className="text-cu-gold" size={20} />
                 </div>
                 <div>
                   <p className="text-dark-500 text-sm">{item.label}</p>
                   {item.href ? (
                     <a
                       href={item.href}
-                      className="text-dark-200 hover:text-primary-400 transition-colors"
+                      className="text-dark-200 hover:text-cu-gold transition-colors"
                     >
                       {item.value}
                     </a>
@@ -82,9 +82,9 @@ const Contact = () => {
                 href="https://www.linkedin.com/in/logan-carter-35h/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-3 p-4 glass rounded-xl hover:border-primary-500/50 transition-all flex-1"
+                className="group flex items-center gap-3 p-4 glass rounded-xl hover:border-cu-gold/50 transition-all flex-1"
               >
-                <Linkedin className="text-dark-400 group-hover:text-primary-400 transition-colors" size={24} />
+                <Linkedin className="text-dark-400 group-hover:text-cu-gold transition-colors" size={24} />
                 <div>
                   <p className="text-dark-300 font-medium group-hover:text-white transition-colors">LinkedIn</p>
                   <p className="text-dark-500 text-sm">Logan Carter</p>
@@ -92,9 +92,9 @@ const Contact = () => {
               </a>
               <a
                 href="mailto:Logan.Carter1@me.com"
-                className="group flex items-center gap-3 p-4 glass rounded-xl hover:border-primary-500/50 transition-all flex-1"
+                className="group flex items-center gap-3 p-4 glass rounded-xl hover:border-cu-gold/50 transition-all flex-1"
               >
-                <Mail className="text-dark-400 group-hover:text-primary-400 transition-colors" size={24} />
+                <Mail className="text-dark-400 group-hover:text-cu-gold transition-colors" size={24} />
                 <div>
                   <p className="text-dark-300 font-medium group-hover:text-white transition-colors">Email</p>
                   <p className="text-dark-500 text-sm">Logan.Carter1@me.com</p>
@@ -103,7 +103,7 @@ const Contact = () => {
             </div>
           </div>
 
-          <div className="mt-6 p-4 rounded-xl bg-primary-500/5 border border-primary-500/20">
+          <div className="mt-6 p-4 rounded-xl bg-cu-gold/5 border border-cu-gold/20">
             <div className="flex items-center gap-3 mb-2">
               <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
               <span className="text-green-400 font-medium">Seeking Internships</span>
