@@ -40,7 +40,7 @@ const Footer = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-dark-400 hover:text-primary-400 transition-colors text-sm"
+                className="text-dark-400 hover:text-cu-gold transition-colors text-sm"
               >
                 {link.name}
               </a>
@@ -55,7 +55,7 @@ const Footer = () => {
                 target={link.href.startsWith('http') ? '_blank' : undefined}
                 rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="w-10 h-10 rounded-lg bg-dark-800/50 border border-dark-700/50 flex items-center justify-center
-                         text-dark-400 hover:text-primary-400 hover:border-primary-500/50 transition-all"
+                         text-dark-400 hover:text-cu-gold hover:border-cu-gold/50 transition-all"
                 whileHover={{ y: -3 }}
                 aria-label={link.label}
               >
@@ -74,7 +74,7 @@ const Footer = () => {
 
           <motion.button
             onClick={scrollToTop}
-            className="flex items-center gap-2 text-dark-400 hover:text-primary-400 transition-colors text-sm"
+            className="flex items-center gap-2 text-dark-400 hover:text-cu-gold transition-colors text-sm"
             whileHover={{ y: -2 }}
           >
             Back to top
