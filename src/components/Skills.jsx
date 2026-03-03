@@ -63,10 +63,10 @@ const CircularGauge = ({ skill, value, color, delay, isInView }) => {
 
 // ── Main component ───────────────────────────────────────────
 const gauges = [
-  { skill: 'SolidWorks',       value: 90, color: '#0ea5e9' },
+  { skill: 'SolidWorks',       value: 90, color: '#CFB87C' },
   { skill: 'MATLAB',           value: 82, color: '#f59e0b' },
   { skill: 'Ansys FEA',        value: 75, color: '#8b5cf6' },
-  { skill: 'Mech. Design',     value: 88, color: '#0ea5e9' },
+  { skill: 'Mech. Design',     value: 88, color: '#CFB87C' },
   { skill: '3D Printing',      value: 82, color: '#f97316' },
   { skill: 'Thermodynamics',   value: 78, color: '#10b981' },
   { skill: 'Materials Sci.',   value: 80, color: '#06b6d4' },
@@ -105,9 +105,9 @@ const Skills = () => {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="h-[1px] w-12 bg-blueprint-500/40" />
-            <span className="font-mono text-[10px] text-blueprint-400/60 tracking-[0.35em] uppercase">Instrument Panel</span>
-            <div className="h-[1px] w-12 bg-blueprint-500/40" />
+            <div className="h-[1px] w-12 bg-cu-gold/40" />
+            <span className="font-mono text-[10px] text-cu-gold/60 tracking-[0.35em] uppercase">Instrument Panel</span>
+            <div className="h-[1px] w-12 bg-cu-gold/40" />
           </div>
           <h2 className="section-heading">
             Technical <span className="gradient-text">Proficiency</span>
@@ -129,8 +129,8 @@ const Skills = () => {
           <div className="corner-bl" /><div className="corner-br" />
 
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-1.5 h-1.5 bg-blueprint-400 rounded-full animate-pulse" />
-            <span className="font-mono text-[10px] text-blueprint-400/60 tracking-widest uppercase">Core Proficiency Gauges</span>
+            <div className="w-1.5 h-1.5 bg-cu-gold rounded-full animate-pulse" />
+            <span className="font-mono text-[10px] text-cu-gold/60 tracking-widest uppercase">Core Proficiency Gauges</span>
             <div className="ml-auto font-mono text-[9px] text-dark-700">SYS: ACTIVE</div>
           </div>
 
@@ -160,10 +160,10 @@ const Skills = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.45, delay: 0.3 + i * 0.08 }}
-              className="relative glass rounded-xl p-5 group hover:border-blueprint-500/30 transition-colors"
+              className="relative glass rounded-xl p-5 group hover:border-cu-gold/30 transition-colors"
             >
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-1 h-4 bg-gradient-to-b from-blueprint-500 to-blueprint-700 rounded-full" />
+                <div className="w-1 h-4 bg-gradient-to-b from-cu-gold to-cu-gold-dark rounded-full" />
                 <h3 className="text-sm font-semibold text-white">{cat.title}</h3>
               </div>
               <div className="flex flex-wrap gap-1.5">
