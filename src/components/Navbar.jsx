@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Linkedin, FileText } from 'lucide-react'
 
+const navLinks = [
+  { name: 'About',      href: '#about'      },
+  { name: 'Education',  href: '#education'  },
+  { name: 'Projects',   href: '#projects'   },
+  { name: 'Experience', href: '#experience' },
+  { name: 'Skills',     href: '#skills'     },
+  { name: 'Contact',    href: '#contact'    },
+]
+
 const Navbar = () => {
   const [isOpen,    setIsOpen]    = useState(false)
   const [scrolled,  setScrolled]  = useState(false)
@@ -50,6 +59,21 @@ const Navbar = () => {
             </div>
           </motion.a>
 
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center space-x-7">
+            {navLinks.map((link) => (
+              <motion.a
+                key={link.name}
+                href={link.href}
+                className="relative text-dark-400 hover:text-white transition-colors font-medium text-sm tracking-wide group"
+                whileHover={{ y: -2 }}
+              >
+                {link.name}
+                <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-cu-gold transition-all duration-300 group-hover:w-full" />
+              </motion.a>
+            ))}
+          </div>
+
           {/* Right actions */}
           <div className="hidden md:flex items-center gap-4">
             <span className="font-mono text-[9px] text-dark-700 tracking-widest hidden lg:block select-none">
@@ -95,8 +119,20 @@ const Navbar = () => {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden glass mt-2 mx-4 rounded-lg overflow-hidden"
           >
-            <div className="py-4 px-6">
-              <div className="flex items-center justify-between">
+            <div className="py-4 px-6 space-y-4">
+              {navLinks.map((link) => (
+                <motion.a
+                  key={link.name}
+                  href={link.href}
+                  className="block text-dark-300 hover:text-cu-gold transition-colors font-medium"
+                  onClick={() => setIsOpen(false)}
+                  whileHover={{ x: 8 }}
+                >
+                  <span className="font-mono text-cu-gold-dark text-xs mr-2">▸</span>
+                  {link.name}
+                </motion.a>
+              ))}
+              <div className="flex items-center justify-between pt-4 border-t border-dark-700/50">
                 <a
                   href="https://www.linkedin.com/in/logan-carter-35h/"
                   target="_blank"
